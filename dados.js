@@ -1,4 +1,4 @@
-const PRODUTOS = {
+ const PRODUTOS = {
     processador: [
         {
             id: 1,
@@ -8,7 +8,7 @@ const PRODUTOS = {
             lucro: 250,
             margem: "33%",
             categoria: "processador",
-            icon: "🔧",
+            icon: "imagens/intelcorei3.jfif",
             descricao: "Processador básico para tarefas do dia a dia"
         },
         {
@@ -19,7 +19,7 @@ const PRODUTOS = {
             lucro: 350,
             margem: "28%",
             categoria: "processador",
-            icon: "⚙️",
+            icon: "imagens/amdryzen5.jfif",
             descricao: "Processador intermediário com bom desempenho"
         },
         {
@@ -30,7 +30,7 @@ const PRODUTOS = {
             lucro: 600,
             margem: "25%",
             categoria: "processador",
-            icon: "🔩",
+            icon: "imagens/intelcorei7.jfif",
             descricao: "Processador top para gaming e workstation"
         }
     ],
@@ -43,7 +43,7 @@ const PRODUTOS = {
             lucro: 350,
             margem: "28%",
             categoria: "gpu",
-            icon: "🎮",
+            icon: "imagens/gtx 1650.jfif",
             descricao: "Placa de vídeo básica para gaming casual"
         },
         {
@@ -54,7 +54,7 @@ const PRODUTOS = {
             lucro: 700,
             margem: "28%",
             categoria: "gpu",
-            icon: "🎯",
+            icon: "imagens/rtx 3060.jfif",
             descricao: "Placa intermediária com ray tracing"
         },
         {
@@ -65,7 +65,7 @@ const PRODUTOS = {
             lucro: 1000,
             margem: "24%",
             categoria: "gpu",
-            icon: "🚀",
+            icon: "imagens/rtx 4070.jfif",
             descricao: "Placa top de linha para máximo desempenho"
         }
     ],
@@ -78,7 +78,7 @@ const PRODUTOS = {
             lucro: 80,
             margem: "40%",
             categoria: "ram",
-            icon: "💾",
+            icon: "imagens/8gb ddr4.jfif",
             descricao: "Memória básica para uso geral"
         },
         {
@@ -89,7 +89,7 @@ const PRODUTOS = {
             lucro: 150,
             margem: "37%",
             categoria: "ram",
-            icon: "🧠",
+            icon: "imagens/16gb ddr4.jfif",
             descricao: "Memória intermediária para multitarefa"
         },
         {
@@ -100,7 +100,7 @@ const PRODUTOS = {
             lucro: 250,
             margem: "29%",
             categoria: "ram",
-            icon: "⚡",
+            icon: "imagens/32gb ddr5.jfif",
             descricao: "Memória top com tecnologia DDR5"
         }
     ],
@@ -113,7 +113,7 @@ const PRODUTOS = {
             lucro: 80,
             margem: "44%",
             categoria: "ssd",
-            icon: "📀",
+            icon: "imagens/ssd 240gb.jfif",
             descricao: "Armazenamento básico e rápido"
         },
         {
@@ -124,7 +124,7 @@ const PRODUTOS = {
             lucro: 120,
             margem: "40%",
             categoria: "ssd",
-            icon: "💿",
+            icon: "imagens/ssd 500gb.jfif",
             descricao: "Armazenamento intermediário com ótimo custo-benefício"
         },
         {
@@ -135,7 +135,7 @@ const PRODUTOS = {
             lucro: 200,
             margem: "36%",
             categoria: "ssd",
-            icon: "🔌",
+            icon: "imagens/ssd 1tb.jfif",
             descricao: "Armazenamento top com velocidade máxima"
         }
     ],
@@ -148,7 +148,7 @@ const PRODUTOS = {
             lucro: 200,
             margem: "33%",
             categoria: "placa-mae",
-            icon: "🧩",
+            icon: "imagens/placa mãe H510.jfif",
             descricao: "Placa-mãe básica com bom custo-benefício"
         },
         {
@@ -159,7 +159,7 @@ const PRODUTOS = {
             lucro: 300,
             margem: "30%",
             categoria: "placa-mae",
-            icon: "🖲️",
+            icon: "imagens/Placa mãe B550.jfif",
             descricao: "Placa intermediária com suporte a Ryzen"
         },
         {
@@ -170,7 +170,7 @@ const PRODUTOS = {
             lucro: 600,
             margem: "28%",
             categoria: "placa-mae",
-            icon: "⚙️",
+            icon: "imagens/Placa mãe Z790.jfif",
             descricao: "Placa top para Intel de última geração"
         }
     ],
@@ -183,7 +183,7 @@ const PRODUTOS = {
             lucro: 100,
             margem: "40%",
             categoria: "fonte",
-            icon: "🔌",
+            icon: "imagens/Fonte 400W ATX.jfif",
             descricao: "Fonte básica para sistemas econômicos"
         },
         {
@@ -194,7 +194,7 @@ const PRODUTOS = {
             lucro: 150,
             margem: "33%",
             categoria: "fonte",
-            icon: "⚡",
+            icon: "imagens/Fonte 600W ATX.jfif",
             descricao: "Fonte intermediária com boa eficiência"
         },
         {
@@ -205,7 +205,7 @@ const PRODUTOS = {
             lucro: 250,
             margem: "29%",
             categoria: "fonte",
-            icon: "🔋",
+            icon: "imagens/Fonte 850W modular.jfif",
             descricao: "Fonte top com cabos modulares"
         }
     ],
@@ -218,7 +218,7 @@ const PRODUTOS = {
             lucro: 100,
             margem: "45%",
             categoria: "gabinete",
-            icon: "🖥️",
+            icon: "imagens/Gabinete simples.jfif",
             descricao: "Gabinete básico e funcional"
         },
         {
@@ -229,7 +229,7 @@ const PRODUTOS = {
             lucro: 150,
             margem: "37%",
             categoria: "gabinete",
-            icon: "🎮",
+            icon: "imagens/Gabinete PC gamer rgb.jfif",
             descricao: "Gabinete com LED RGB personalizável"
         },
         {
@@ -240,7 +240,7 @@ const PRODUTOS = {
             lucro: 250,
             margem: "33%",
             categoria: "gabinete",
-            icon: "💎",
+            icon: "imagens/gabinete top.jfif",
             descricao: "Gabinete premium com vidro temperado"
         }
     ]
