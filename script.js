@@ -31,7 +31,7 @@ function renderizarProdutos(produtos) {
                 <strong>Lucro:</strong> ${produto.margem}
             </div>
             <div class="preco">R$ ${produto.preco.toFixed(2)}</div>
-            <button class="btn-adicionar" onclick="adicionarAoCarrinho(${produto.id})">
+            <button class="btn-adicionar" onclick="adicionarAoCarrinho('${produto.id}')">
                 Adicionar ao Carrinho
             </button>
         `;
@@ -76,7 +76,7 @@ function renderizarPCs() {
                 <p><strong>Gabinete:</strong> ${pc.componentes.gabinete}</p>
             </div>
             <div class="pc-preco">R$ ${pc.preco.toFixed(2)}</div>
-            <button class="btn-adicionar" onclick="adicionarPCaoCarrinho(${pc.id})">
+            <button class="btn-adicionar" onclick="adicionarPCaoCarrinho('${pc.id}')">
                 Adicionar ao Carrinho
             </button>
         `;
@@ -87,6 +87,11 @@ function renderizarPCs() {
 // ADICIONAR AO CARRINHO (PRODUTO)
 function adicionarAoCarrinho(id) {
     const produto = buscarProduto(id);
+
+    if (!produto) {
+        console.error('Produto não encontrado:', id);
+        return;
+    }
 
     const itemExistente = carrinho.find(item => item.id === id && item.tipo === 'produto');
 
@@ -110,6 +115,11 @@ function adicionarAoCarrinho(id) {
 function adicionarPCaoCarrinho(id) {
     const pc = PCS_PREMONTADOS.find(p => p.id === id);
 
+    if (!pc) {
+        console.error('PC não encontrado:', id);
+        return;
+    }
+
     const itemExistente = carrinho.find(item => item.id === id && item.tipo === 'pc');
 
     if (itemExistente) {
@@ -128,10 +138,10 @@ function adicionarPCaoCarrinho(id) {
     mostrarNotificacao('✅ PC adicionado ao carrinho!');
 }
 
-// BUSCAR PRODUTO
+// BUSCAR PRODUTO - CORRIGIDO
 function buscarProduto(id) {
     for (const categoria in PRODUTOS) {
-        const produto = PRODUTOS[categoria].find(p => p.id === id);
+        const produto = PRODUTOS[categoria].find(p => p.id === parseInt(id));
         if (produto) return produto;
     }
     return null;
@@ -238,7 +248,6 @@ function fecharCheckout() {
 function processarCompra(event) {
     event.preventDefault();
 
-    // Simular processamento
     const modal = document.getElementById('checkoutModal');
     const conteudo = modal.querySelector('.modal-content');
 
