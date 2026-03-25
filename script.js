@@ -1,7 +1,7 @@
 let carrinho = [];
 let filtroAtual = 'todos';
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     renderizarProdutos(Object.values(PRODUTOS).flat());
     renderizarPCs();
 });
@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function mostrarSecao(secao) {
     document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
     document.getElementById(secao).classList.remove('hidden');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
 function renderizarProdutos(produtos) {
@@ -27,9 +27,7 @@ function renderizarProdutos(produtos) {
                 <strong>Lucro:</strong> ${produto.margem}
             </div>
             <div class="preco">R$ ${produto.preco.toFixed(2)}</div>
-            <button class="btn-adicionar" onclick="adicionarAoCarrinho(${produto.id})">
-                Adicionar ao Carrinho
-            </button>
+            <button class="btn-adicionar" onclick="adicionarAoCarrinho(${produto.id})">Adicionar ao Carrinho</button>
         `;
         grid.appendChild(card);
     });
@@ -67,9 +65,7 @@ function renderizarPCs() {
                 <p><strong>Gabinete:</strong> ${pc.componentes.gabinete}</p>
             </div>
             <div class="pc-preco">R$ ${pc.preco.toFixed(2)}</div>
-            <button class="btn-adicionar" onclick="adicionarPCaoCarrinho('${pc.id}')">
-                Adicionar ao Carrinho
-            </button>
+            <button class="btn-adicionar" onclick="adicionarPCaoCarrinho('${pc.id}')">Adicionar ao Carrinho</button>
         `;
         grid.appendChild(card);
     });
@@ -193,5 +189,110 @@ function limparCarrinho() {
 
 function toggleCarrinho() {
     const sidebar = document.getElementById('carrinhoSidebar');
-    const overlay*
-
+    const overlay = document.getElementById('overlay');
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('active');
+}
+
+function fazerCheckout() {
+    if (carrinho.length === 0) {
+        alert('Seu carrinho está vazio!');
+        return;
+    }
+    toggleCarrinho();
+    document.getElementById('checkoutModal').classList.add('active');
+}
+
+function fecharCheckout() {
+    document.getElementById('checkoutModal').classList.remove('active');
+}
+
+function processarCompra(event) {
+    event.preventDefault();
+    const modal = document.getElementById('checkoutModal');
+    const conteudo = modal.querySelector('.modal-content');
+    conteudo.innerHTML = `
+        <h2 style="color: var(--success); text-shadow: 0 0 10px var(--success);">✅ Compra Realizada!</h2>
+        <p style="text-align: center; margin: 30px 0;">
+            Obrigado pela sua compra na MP PrimeTech!<br><br>
+            <strong>Número do Pedido:</strong> #${Math.floor(Math.random() * 100000)}<br><br>
+            Você receberá um email de confirmação em breve.
+        </p>
+        <button class="btn-primary" style="width: 100%;" onclick="finalizarCompra()">Voltar para Home</button>
+    `;
+}
+
+function finalizarCompra() {
+    document.getElementById('checkoutModal').classList.remove('active');
+    document.querySelector('.modal-content').innerHTML = `
+        <button class="close-btn" onclick="fecharCheckout()">✕</button>
+        <h2>Finalizar Compra</h2>
+        <form onsubmit="processarCompra(event)">
+            <div class="form-group">
+                <label>Nome Completo</label>
+                <input type="text" required>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" required>
+            </div>
+            <div class="form-group">
+                <label>Endereço</label>
+                <input type="text" required>
+            </div>
+            <div class="form-group">
+                <label>Número do Cartão (Ilustrativo)</label>
+                <input type="text" placeholder="0000 0000 0000 0000" required>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Validade</label>
+                    <input type="text" placeholder="MM/AA" required>
+                </div>
+                <div class="form-group">
+                    <label>CVV</label>
+                    <input type="text" placeholder="000" required>
+                </div>
+            </div>
+            <button type="submit" class="btn-comprar">Confirmar Compra</button>
+        </form>
+    `;
+    carrinho = [];
+    atualizarCarrinho();
+    mostrarNotificacao('🎉 Compra finalizada com sucesso!');
+}
+
+function mostrarNotificacao(mensagem) {
+    const notif = document.createElement('div');
+    notif.style.cssText = `
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        background: linear-gradient(135deg, var(--neon-blue), var(--gold));
+        color: var(--dark-bg);
+        padding: 15px 25px;
+        border-radius: 8px;
+        font-weight: bold;
+        z-index: 3000;
+        animation: slideIn 0.3s ease-out;
+    `;
+    notif.textContent = mensagem;
+    document.body.appendChild(notif);
+    setTimeout(() => {
+        notif.style.animation = 'slideOut 0.3s ease-out';
+        setTimeout(() => notif.remove(), 300);
+    }, 3000);
+}
+
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideIn {
+        from {transform: translateX(400px); opacity: 0;}
+        to {transform: translateX(0); opacity: 1;}
+    }
+    @keyframes slideOut {
+        from {transform: translateX(0); opacity: 1;}
+        to {transform: translateX(400px); opacity: 0;}
+    }
+`;
+document.head.appendChild(style);
