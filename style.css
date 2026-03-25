@@ -293,8 +293,12 @@ body {
 }
 
 .produto-icon {
-    font-size: 50px;
+    width: 100%;
+    max-width: 200px;
+    height: 150px;
+    object-fit: cover;
     margin-bottom: 15px;
+    border-radius: 8px;
 }
 
 .produto-card h3 {
