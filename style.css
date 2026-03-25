@@ -51,8 +51,8 @@ body {
 }
 
 .logo-icon {
-    width: 15px;
-    height: 15px;
+    width: 30px;
+    height: 30px;
     object-fit: contain;
     animation: pulse 2s infinite;
 }
