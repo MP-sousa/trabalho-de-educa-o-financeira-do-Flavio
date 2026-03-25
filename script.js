@@ -27,9 +27,14 @@ function renderizarProdutos(produtos) {
                 <strong>Lucro:</strong> ${produto.margem}
             </div>
             <div class="preco">R$ ${produto.preco.toFixed(2)}</div>
-            <button class="btn-adicionar" onclick="adicionarAoCarrinho(${produto.id})">Adicionar ao Carrinho</button>
+            <button class="btn-adicionar" data-id="${produto.id}">Adicionar ao Carrinho</button>
         `;
         grid.appendChild(card);
+        
+        // Adiciona event listener ao botão
+        card.querySelector('.btn-adicionar').addEventListener('click', function() {
+            adicionarAoCarrinho(produto.id);
+        });
     });
 }
 
@@ -65,9 +70,14 @@ function renderizarPCs() {
                 <p><strong>Gabinete:</strong> ${pc.componentes.gabinete}</p>
             </div>
             <div class="pc-preco">R$ ${pc.preco.toFixed(2)}</div>
-            <button class="btn-adicionar" onclick="adicionarPCaoCarrinho('${pc.id}')">Adicionar ao Carrinho</button>
+            <button class="btn-adicionar" data-id="${pc.id}">Adicionar ao Carrinho</button>
         `;
         grid.appendChild(card);
+        
+        // Adiciona event listener ao botão
+        card.querySelector('.btn-adicionar').addEventListener('click', function() {
+            adicionarPCaoCarrinho(pc.id);
+        });
     });
 }
 
