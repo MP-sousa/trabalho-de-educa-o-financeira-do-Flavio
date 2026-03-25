@@ -84,28 +84,33 @@ function renderizarPCs() {
     });
 }
 
-// ADICIONAR AO CARRINHO (PRODUTO)
+// ADICIONAR AO CARRINHO (PRODUTO) - corrigido o bug de nao clicar.
 function adicionarAoCarrinho(id) {
-    const produto = buscarProduto(id);
+    const idNum = parseInt(id);
+    const produto = buscarProduto(idNum);
 
     if (!produto) {
-        console.error('Produto não encontrado:', id);
+        console.error('Produto não encontrado:', idNum);
         return;
     }
 
-    const itemExistente = carrinho.find(item => item.id === id && item.tipo === 'produto');
+    const itemExistente = carrinho.find(item => item.id === idNum && item.tipo === 'produto');
 
     if (itemExistente) {
         itemExistente.quantidade++;
     } else {
         carrinho.push({
-            id,
+            id: idNum,
             nome: produto.nome,
             preco: produto.preco,
             quantidade: 1,
             tipo: 'produto'
         });
     }
+
+    atualizarCarrinho();
+    mostrarNotificacao('✅ Adicionado ao carrinho!');
+}
 
     atualizarCarrinho();
     mostrarNotificacao('✅ Adicionado ao carrinho!');
@@ -138,10 +143,11 @@ function adicionarPCaoCarrinho(id) {
     mostrarNotificacao('✅ PC adicionado ao carrinho!');
 }
 
-// BUSCAR PRODUTO
+// BUSCAR PRODUTO - CORRIGIDO (talvez
 function buscarProduto(id) {
+    const idNum = parseInt(id); // Converte para numero
     for (const categoria in PRODUTOS) {
-        const produto = PRODUTOS[categoria].find(p => p.id === id);
+        const produto = PRODUTOS[categoria].find(p => p.id === idNum);
         if (produto) return produto;
     }
     return null;
