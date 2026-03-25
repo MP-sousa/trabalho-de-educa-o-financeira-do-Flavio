@@ -19,7 +19,7 @@ function renderizarProdutos(produtos) {
         const card = document.createElement('div');
         card.className = 'produto-card';
         card.innerHTML = `
-            <div class="produto-icon">${produto.icon}</div>
+            <img src="${produto.icon}" alt="${produto.nome}" class="produto-icon">
             <h3>${produto.nome}</h3>
             <p>${produto.descricao}</p>
             <div class="detalhes">
