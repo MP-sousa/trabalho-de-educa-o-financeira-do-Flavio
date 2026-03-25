@@ -280,6 +280,7 @@ body {
     background: radial-gradient(circle, var(--neon-blue) 0%, transparent 70%);
     opacity: 0;
     transition: opacity 0.3s;
+    pointer-events: none;
 }
 
 .produto-card:hover {
