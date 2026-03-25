@@ -1,24 +1,20 @@
 let carrinho = [];
 let filtroAtual = 'todos';
 
-// INICIALIZAR
 document.addEventListener('DOMContentLoaded', function () {
     renderizarProdutos(Object.values(PRODUTOS).flat());
     renderizarPCs();
 });
 
-// MOSTRAR SEÇÃO
 function mostrarSecao(secao) {
     document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
     document.getElementById(secao).classList.remove('hidden');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// RENDERIZAR PRODUTOS
 function renderizarProdutos(produtos) {
     const grid = document.getElementById('produtosGrid');
     grid.innerHTML = '';
-
     produtos.forEach(produto => {
         const card = document.createElement('div');
         card.className = 'produto-card';
@@ -39,13 +35,10 @@ function renderizarProdutos(produtos) {
     });
 }
 
-// FILTRAR PRODUTOS
 function filtrarProdutos(categoria) {
     document.querySelectorAll('.filtro-btn').forEach(btn => btn.classList.remove('active'));
     event.target.classList.add('active');
-
     filtroAtual = categoria;
-
     if (categoria === 'todos') {
         renderizarProdutos(Object.values(PRODUTOS).flat());
     } else {
@@ -54,11 +47,9 @@ function filtrarProdutos(categoria) {
     }
 }
 
-// RENDERIZAR PCs PRÉ-MONTADOS
 function renderizarPCs() {
     const grid = document.getElementById('pcsGrid');
     grid.innerHTML = '';
-
     PCS_PREMONTADOS.forEach(pc => {
         const card = document.createElement('div');
         card.className = 'pc-card';
@@ -84,7 +75,6 @@ function renderizarPCs() {
     });
 }
 
-// BUSCAR PRODUTO
 function buscarProduto(id) {
     for (const categoria in PRODUTOS) {
         const produto = PRODUTOS[categoria].find(p => p.id === id);
@@ -93,17 +83,13 @@ function buscarProduto(id) {
     return null;
 }
 
-// ADICIONAR AO CARRINHO (PRODUTO)
 function adicionarAoCarrinho(id) {
     const produto = buscarProduto(id);
-
     if (!produto) {
         console.error('Produto não encontrado:', id);
         return;
     }
-
     const itemExistente = carrinho.find(item => item.id === id && item.tipo === 'produto');
-
     if (itemExistente) {
         itemExistente.quantidade++;
     } else {
@@ -115,22 +101,17 @@ function adicionarAoCarrinho(id) {
             tipo: 'produto'
         });
     }
-
     atualizarCarrinho();
     mostrarNotificacao('✅ Adicionado ao carrinho!');
 }
 
-// ADICIONAR PC AO CARRINHO
 function adicionarPCaoCarrinho(id) {
     const pc = PCS_PREMONTADOS.find(p => p.id === id);
-
     if (!pc) {
         console.error('PC não encontrado:', id);
         return;
     }
-
     const itemExistente = carrinho.find(item => item.id === id && item.tipo === 'pc');
-
     if (itemExistente) {
         itemExistente.quantidade++;
     } else {
@@ -142,24 +123,20 @@ function adicionarPCaoCarrinho(id) {
             tipo: 'pc'
         });
     }
-
     atualizarCarrinho();
     mostrarNotificacao('✅ PC adicionado ao carrinho!');
 }
 
-// ATUALIZAR CARRINHO
 function atualizarCarrinho() {
     const itemsContainer = document.getElementById('carrinhoItems');
     itemsContainer.innerHTML = '';
     let total = 0;
-
     if (carrinho.length === 0) {
         itemsContainer.innerHTML = '<p style="text-align: center; color: var(--text-light);">Seu carrinho está vazio</p>';
     } else {
         carrinho.forEach((item, index) => {
             const subtotal = item.preco * item.quantidade;
             total += subtotal;
-
             const itemDiv = document.createElement('div');
             itemDiv.className = 'carrinho-item';
             itemDiv.innerHTML = `
@@ -175,12 +152,10 @@ function atualizarCarrinho() {
             itemsContainer.appendChild(itemDiv);
         });
     }
-
     document.getElementById('carrinhoTotal').textContent = `R$ ${total.toFixed(2)}`;
     document.querySelector('.carrinho-count').textContent = carrinho.length;
 }
 
-// MUDAR QUANTIDADE
 function mudarQuantidade(index, valor) {
     carrinho[index].quantidade += valor;
     if (carrinho[index].quantidade <= 0) {
@@ -190,7 +165,6 @@ function mudarQuantidade(index, valor) {
     }
 }
 
-// ATUALIZAR QUANTIDADE
 function atualizarQuantidade(index, valor) {
     const qtd = parseInt(valor);
     if (qtd <= 0) {
@@ -201,13 +175,11 @@ function atualizarQuantidade(index, valor) {
     }
 }
 
-// REMOVER DO CARRINHO
 function removerDoCarrinho(index) {
     carrinho.splice(index, 1);
     atualizarCarrinho();
 }
 
-// LIMPAR CARRINHO
 function limparCarrinho() {
     if (carrinho.length === 0) {
         alert('Seu carrinho já está vazio!');
@@ -219,71 +191,7 @@ function limparCarrinho() {
     }
 }
 
-// TOGGLE CARRINHO SIDEBAR
 function toggleCarrinho() {
     const sidebar = document.getElementById('carrinhoSidebar');
-    const overlay = document.getElementById('overlay');
-
-    sidebar.classList.toggle('open');
-    overlay.classList.toggle('active');
-}
-
-// FAZER CHECKOUT
-function fazerCheckout() {
-    if (carrinho.length === 0) {
-        alert('Seu carrinho está vazio!');
-        return;
-    }
-
-    toggleCarrinho();
-    document.getElementById('checkoutModal').classList.add('active');
-}
-
-// FECHAR CHECKOUT
-function fecharCheckout() {
-    document.getElementById('checkoutModal').classList.remove('active');
-}
-
-// PROCESSAR COMPRA
-function processarCompra(event) {
-    event.preventDefault();
-
-    const modal = document.getElementById('checkoutModal');
-    const conteudo = modal.querySelector('.modal-content');
-
-    conteudo.innerHTML = `
-        <h2 style="color: var(--success); text-shadow: 0 0 10px var(--success);">✅ Compra Realizada!</h2>
-        <p style="text-align: center; margin: 30px 0;">
-            Obrigado pela sua compra na MP PrimeTech!<br><br>
-            <strong>Número do Pedido:</strong> #${Math.floor(Math.random() * 100000)}<br><br>
-            Você receberá um email de confirmação em breve.
-        </p>
-        <button class="btn-primary" style="width: 100%;" onclick="finalizarCompra()">
-            Voltar para Home
-        </button>
-    `;
-}
-
-// FINALIZAR COMPRA
-function finalizarCompra() {
-    document.getElementById('checkoutModal').classList.remove('active');
-    document.querySelector('.modal-content').innerHTML = `
-        <button class="close-btn" onclick="fecharCheckout()">✕</button>
-        <h2>Finalizar Compra</h2>
-        <form onsubmit="processarCompra(event)">
-            <div class="form-group">
-                <label>Nome Completo</label>
-                <input type="text" required>
-            </div>
-            <div class="form-group">
-                <label>Email</label>
-                <input type="email" required>
-            </div>
-            <div class="form-group">
-                <label>Endereço</label>
-                <input type="text" required>
-            </div>
-            <div class="form-group">
-                <label>Número do Cartão (Ilustrativo)</label>
-                `*
+    const overlay*
 
