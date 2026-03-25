@@ -31,7 +31,7 @@ function renderizarProdutos(produtos) {
                 <strong>Lucro:</strong> ${produto.margem}
             </div>
             <div class="preco">R$ ${produto.preco.toFixed(2)}</div>
-            <button class="btn-adicionar" onclick="adicionarAoCarrinho('${produto.id}')">
+            <button class="btn-adicionar" onclick="adicionarAoCarrinho(${produto.id})">
                 Adicionar ao Carrinho
             </button>
         `;
@@ -113,7 +113,7 @@ function adicionarAoCarrinho(id) {
 
 // ADICIONAR PC AO CARRINHO
 function adicionarPCaoCarrinho(id) {
-    const pc = PCS_PREMONTADOS.find(p => p.id === id);
+    const pc = PCS_PREMONTADOS.find(p => p.id === String(id));
 
     if (!pc) {
         console.error('PC não encontrado:', id);
@@ -138,10 +138,10 @@ function adicionarPCaoCarrinho(id) {
     mostrarNotificacao('✅ PC adicionado ao carrinho!');
 }
 
-// BUSCAR PRODUTO - CORRIGIDO
+// BUSCAR PRODUTO
 function buscarProduto(id) {
     for (const categoria in PRODUTOS) {
-        const produto = PRODUTOS[categoria].find(p => p.id === parseInt(id));
+        const produto = PRODUTOS[categoria].find(p => p.id === id);
         if (produto) return produto;
     }
     return null;
