@@ -84,23 +84,31 @@ function renderizarPCs() {
     });
 }
 
-// ADICIONAR AO CARRINHO (PRODUTO) - corrigido o bug de nao clicar.
+// BUSCAR PRODUTO
+function buscarProduto(id) {
+    for (const categoria in PRODUTOS) {
+        const produto = PRODUTOS[categoria].find(p => p.id === id);
+        if (produto) return produto;
+    }
+    return null;
+}
+
+// ADICIONAR AO CARRINHO (PRODUTO)
 function adicionarAoCarrinho(id) {
-    const idNum = parseInt(id);
-    const produto = buscarProduto(idNum);
+    const produto = buscarProduto(id);
 
     if (!produto) {
-        console.error('Produto não encontrado:', idNum);
+        console.error('Produto não encontrado:', id);
         return;
     }
 
-    const itemExistente = carrinho.find(item => item.id === idNum && item.tipo === 'produto');
+    const itemExistente = carrinho.find(item => item.id === id && item.tipo === 'produto');
 
     if (itemExistente) {
         itemExistente.quantidade++;
     } else {
         carrinho.push({
-            id: idNum,
+            id: id,
             nome: produto.nome,
             preco: produto.preco,
             quantidade: 1,
@@ -112,13 +120,9 @@ function adicionarAoCarrinho(id) {
     mostrarNotificacao('✅ Adicionado ao carrinho!');
 }
 
-    atualizarCarrinho();
-    mostrarNotificacao('✅ Adicionado ao carrinho!');
-}
-
 // ADICIONAR PC AO CARRINHO
 function adicionarPCaoCarrinho(id) {
-    const pc = PCS_PREMONTADOS.find(p => p.id === String(id));
+    const pc = PCS_PREMONTADOS.find(p => p.id === id);
 
     if (!pc) {
         console.error('PC não encontrado:', id);
@@ -131,7 +135,7 @@ function adicionarPCaoCarrinho(id) {
         itemExistente.quantidade++;
     } else {
         carrinho.push({
-            id,
+            id: id,
             nome: pc.nome,
             preco: pc.preco,
             quantidade: 1,
@@ -141,16 +145,6 @@ function adicionarPCaoCarrinho(id) {
 
     atualizarCarrinho();
     mostrarNotificacao('✅ PC adicionado ao carrinho!');
-}
-
-// BUSCAR PRODUTO - CORRIGIDO (talvez
-function buscarProduto(id) {
-    const idNum = parseInt(id); // Converte para numero
-    for (const categoria in PRODUTOS) {
-        const produto = PRODUTOS[categoria].find(p => p.id === idNum);
-        if (produto) return produto;
-    }
-    return null;
 }
 
 // ATUALIZAR CARRINHO
@@ -291,73 +285,5 @@ function finalizarCompra() {
             </div>
             <div class="form-group">
                 <label>Número do Cartão (Ilustrativo)</label>
-                <input type="text" placeholder="0000 0000 0000 0000" required>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Validade</label>
-                    <input type="text" placeholder="MM/AA" required>
-                </div>
-                <div class="form-group">
-                    <label>CVV</label>
-                    <input type="text" placeholder="000" required>
-                </div>
-            </div>
-            <button type="submit" class="btn-comprar">Confirmar Compra</button>
-        </form>
-    `;
-    carrinho = [];
-    atualizarCarrinho();
-    mostrarNotificacao('🎉 Compra finalizada com sucesso!');
-}
-
-// NOTIFICAÇÃO
-function mostrarNotificacao(mensagem) {
-    const notif = document.createElement('div');
-    notif.style.cssText = `
-        position: fixed;
-        top: 80px;
-        right: 20px;
-        background: linear-gradient(135deg, var(--neon-blue), var(--gold));
-        color: var(--dark-bg);
-        padding: 15px 25px;
-        border-radius: 8px;
-        font-weight: bold;
-        z-index: 3000;
-        animation: slideIn 0.3s ease-out;
-    `;
-    notif.textContent = mensagem;
-    document.body.appendChild(notif);
-
-    setTimeout(() => {
-        notif.style.animation = 'slideOut 0.3s ease-out';
-        setTimeout(() => notif.remove(), 300);
-    }, 3000);
-}
-
-// ANIMAÇÕES
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideIn {
-        from {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-
-    @keyframes slideOut {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(style);
+                `*
+
