@@ -248,7 +248,7 @@ const PRODUTOS = {
 
 const PCS_PREMONTADOS = [
     {
-        id: 101,
+        id: "101",
         nome: "PC Básico",
         nivel: "Básico",
         preco: 4320,
@@ -266,7 +266,7 @@ const PCS_PREMONTADOS = [
         lucro: 1250
     },
     {
-        id: 102,
+        id: "102",
         nome: "PC Intermediário",
         nivel: "Intermediário",
         preco: 7600,
@@ -284,7 +284,7 @@ const PCS_PREMONTADOS = [
         lucro: 2300
     },
     {
-        id: 103,
+        id: "103",
         nome: "PC Top de Linha",
         nivel: "Top",
         preco: 13570,
